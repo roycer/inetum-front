@@ -1,0 +1,42 @@
+<mat-toolbar>
+    <span>{{ modulo.label }}</span>
+    <div style="width: 100%;">
+        <button type="button" (click)="backClicked()" mat-raised-button color="warn" style="float: right">
+            <mat-icon>arrow_back</mat-icon>
+            <span>Atrás</span>
+        </button>
+    </div>
+</mat-toolbar>
+
+<div class="container" style="margin-top: 25px">
+    <div class="row">
+        <div class="col-md-12">
+            <mat-card>
+                <mat-card-header>
+                    <mat-card-title>Data Registrada en el Módulo</mat-card-title>
+                </mat-card-header>
+                <div style="margin-top: 20px;">
+                    <div *ngIf="keysData.length > 0">
+                        <table class="mat-table mat-elevation-z8">
+                            <thead>
+                                <tr class="mat-header-row">
+                                    <th class="mat-header-cell" *ngFor="let control of controles">{{control.label}}</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr class="mat-row" *ngFor="let indices of keysData">
+                                    <td class="mat-cell" *ngFor="let control of controles">
+                                        {{getDataColumna(indices.key,(control.idControl)?control.idControl:0)}}
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="info-alert" *ngIf="keysData.length == 0">
+                        <h3>No hay información registrada.</h3>
+                    </div>
+                </div>
+            </mat-card>
+        </div>
+    </div>
+</div>

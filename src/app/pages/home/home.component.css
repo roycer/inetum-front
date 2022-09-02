@@ -1,0 +1,13 @@
+table {
+    width: 100%;
+}
+
+.info-alert {
+    margin-top: 10px;
+    padding: 8px;
+    background: rgba(97, 175, 254, .1);
+    border-color: #61affe;
+    border: 1px solid #000;
+    border-radius: 4px;
+    box-shadow: 0 0 3px rgb(0 0 0 / 19%);
+}

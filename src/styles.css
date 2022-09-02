@@ -1,0 +1,37 @@
+/* You can add global styles to this file, and also import other style files */
+
+html,
+body {
+  height: 100%;
+}
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+  background: #f5f5f5 !important;
+}
+
+.center {
+  display: flex;
+  justify-content: center;
+}
+
+.padding-10 {
+  padding: 10px;
+}
+
+.mat-drawer-inner-container {
+  background: #3c4145 !important;
+  color: #fff !important;
+}
+
+.mat-drawer.mat-drawer-push {
+  background-color: #3c4145 !important;
+}
+
+.mat-list-item-content{
+  color: #fff;
+}
+
+.mat-card {
+  padding: 25px !important;
+}

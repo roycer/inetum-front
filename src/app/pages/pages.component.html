@@ -1,0 +1,45 @@
+<mat-sidenav-container class="sidenav-container">
+  <mat-sidenav #sidenav mode="push" class="sidenav-bar">
+    <div class="center">
+      <p class="padding-10">
+        <mat-icon color="warn" class="sidenav-icon">settings</mat-icon>
+        <span style="display: block">App Builder</span>
+      </p>
+    </div>
+
+    <mat-divider></mat-divider>
+
+    <mat-list role="list" class="sidenav-list">
+      <a mat-list-item role="listitem" (click)="sidenav.close()" [routerLink]="['/panel/home']" class="sidenav-link">
+        <mat-icon matListIcon>list_alt</mat-icon>
+        <span class="sidenav-span">Módulos</span>
+      </a>
+    </mat-list>
+  </mat-sidenav>
+
+  <mat-sidenav-content>
+    <mat-toolbar color="primary">
+      <button mat-icon-button (click)="sidenav.toggle()">
+        <mat-icon>menu</mat-icon>
+      </button>
+      <span>App Builder</span>
+
+      <span class="menu-spacer"></span>
+
+      <button mat-button [matMenuTriggerFor]="menu">
+        <span style="font-size: 16px">Gregory Palacios</span>
+        <mat-icon>more_vert</mat-icon>
+      </button>
+      <mat-menu #menu="matMenu" xPosition="before">
+        <button mat-menu-item>
+          <mat-icon>account_circle</mat-icon> Mi Perfil
+        </button>
+        <button mat-menu-item>
+          <mat-icon>exit_to_app</mat-icon> Cerrar Sesión
+        </button>
+      </mat-menu>
+    </mat-toolbar>
+
+    <router-outlet></router-outlet>
+  </mat-sidenav-content>
+</mat-sidenav-container>

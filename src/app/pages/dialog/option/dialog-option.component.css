@@ -1,0 +1,101 @@
+.dialog-cerrar {
+  float: right;
+  background-color: #fff;
+  border: 1px solid #333;
+}
+
+.dialog-titulo {
+  background-color: #dc3545;
+  color: #fff;
+  text-align: center;
+  font-size: 1.5rem;
+  padding: 4px;
+}
+
+.dialog-contenido {
+  max-width: 500px;
+}
+
+.dialog-botones {
+  text-align: right;
+  margin: 20px;
+}
+
+.dialog-listado {
+  margin: 10px;
+  width: 100%;
+  overflow: auto;
+  max-height: 350px;
+}
+
+table {
+  width: 100%;
+}
+
+table.mat-table {
+  border-spacing: 0;
+}
+
+.mat-table {
+  background: #fff;
+}
+
+.mat-elevation-z8 {
+  box-shadow: 0px 5px 5px -3px rgb(0 0 0 / 20%), 0px 8px 10px 1px rgb(0 0 0 / 14%), 0px 3px 14px 2px rgb(0 0 0 / 12%);
+}
+
+.mat-table {
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+tr.mat-header-row {
+  height: 56px;
+}
+
+th.mat-header-cell:last-of-type,
+td.mat-cell:last-of-type,
+td.mat-footer-cell:last-of-type {
+  padding-right: 24px;
+}
+
+th.mat-header-cell:first-of-type,
+td.mat-cell:first-of-type,
+td.mat-footer-cell:first-of-type {
+  padding-left: 24px;
+}
+
+th.mat-header-cell,
+td.mat-cell,
+td.mat-footer-cell {
+  padding: 0;
+  border-bottom-width: 1px;
+  border-bottom-style: solid;
+}
+
+th.mat-header-cell {
+  text-align: left;
+}
+
+.mat-header-cell {
+  color: rgba(0, 0, 0, .54);
+}
+
+.mat-header-cell {
+  font-size: 12px;
+  font-weight: 500;
+}
+
+tr.mat-row,
+tr.mat-footer-row {
+  height: 48px;
+}
+
+.info-alert {
+  margin-top: 10px;
+  padding: 8px;
+  background: rgba(97, 175, 254, .1);
+  border-color: #61affe;
+  border: 1px solid #000;
+  border-radius: 4px;
+  box-shadow: 0 0 3px rgb(0 0 0 / 19%);
+}

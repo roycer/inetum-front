@@ -1,0 +1,57 @@
+<form autocomplete="off" #optionForm="ngForm" [formGroup]="formOption">
+  <div class="dialog-cerrar">
+    <button mat-icon-button color="primary" [mat-dialog-close]="false">
+      <mat-icon>close</mat-icon>
+    </button>
+  </div>
+  <h3 class="dialog-titulo" mat-dialog-title>
+    {{ titulo }}
+  </h3>
+  <div class="dialog-contenido" mat-dialog-content>
+    <div class="card-body">
+      <div class="row">
+        <div class="col-md-12">
+          <mat-form-field style="width: 100%" appearance="fill">
+            <mat-label>Tabla Relacionada</mat-label>
+            <mat-select formControlName="tableName" (selectionChange)="changeTableName()">
+              <mat-option *ngFor="let tabla of listaTablas" [value]="tabla.tableName">
+                {{ tabla.tableName }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+        <div class="col-md-12">
+          <mat-form-field style="width: 100%" appearance="fill">
+            <mat-label>Opción ID</mat-label>
+            <mat-select formControlName="columnName">
+              <mat-option *ngFor="let columna of listaColumnasId" [value]="columna.columnName">
+                {{ columna.columnName }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+        <div class="col-md-12">
+          <mat-form-field style="width: 100%" appearance="fill">
+            <mat-label>Opción Descripción</mat-label>
+            <mat-select formControlName="label">
+              <mat-option *ngFor="let columna of listaColumnasValue" [value]="columna.columnName">
+                {{ columna.columnName }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="dialog-botones">
+    <button type="button" (click)="guardarOpcion()" mat-raised-button color="warn" [disabled]="edicion">
+      <mat-icon>save</mat-icon>
+      <span>Guardar</span>
+    </button>
+
+    <button type="button" mat-raised-button color="primary" [mat-dialog-close]="false" style="margin-left: 10px">
+      <mat-icon>clear</mat-icon>
+      <span>Cancelar</span>
+    </button>
+  </div>
+</form>

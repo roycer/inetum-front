@@ -1,0 +1,22 @@
+.dialog-cerrar {
+  float: right;
+  background-color: #fff;
+  border: 1px solid #333;
+}
+
+.dialog-titulo {
+  background-color: #dc3545;
+  color: #fff;
+  text-align: center;
+  font-size: 1.5rem;
+  padding: 4px;
+}
+
+.dialog-contenido {
+  max-width: 500px;
+}
+
+.dialog-botones {
+  text-align: right;
+  margin: 20px;
+}
