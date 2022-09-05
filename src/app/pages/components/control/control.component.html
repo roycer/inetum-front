@@ -1,0 +1,75 @@
+<div [formGroup]="form">
+    <div [class]="control.gridClass" style="margin-top: 10px">
+        <div *ngIf="
+            control.controlType == 'input' &&
+            control.inputType != 'date' &&
+            control.inputType != 'dni'
+          ">
+            <mat-form-field class="full-width" appearance="fill">
+                <mat-label>{{ control.label }}</mat-label>
+                <input matInput [type]="control.inputType ? control.inputType : 'text'" [formControlName]="
+                'control-' +
+                control.inputType +
+                '-' +
+                control.idControl
+              " />
+            </mat-form-field>
+        </div>
+        <div *ngIf="
+            control.controlType == 'input' &&
+            control.inputType == 'date'
+          ">
+            <mat-form-field class="full-width" appearance="fill">
+                <mat-label>{{ control.label }}</mat-label>
+                <input matInput [type]="'text'" [formControlName]="
+                'control-' +
+                control.inputType +
+                '-' +
+                control.idControl
+              " [matDatepicker]="picker" readonly />
+                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                <mat-datepicker #picker></mat-datepicker>
+            </mat-form-field>
+        </div>
+        <div *ngIf="
+            control.controlType == 'input' &&
+            control.inputType == 'dni'
+          ">
+            <mat-form-field class="full-width" appearance="fill">
+                <mat-label>{{ control.label }}</mat-label>
+                <input matInput [type]="'text'" [formControlName]="
+                'control-' +
+                control.inputType +
+                '-' +
+                control.idControl
+              " />
+            </mat-form-field>
+        </div>
+        <div *ngIf="control.controlType == 'textarea'">
+            <mat-form-field class="full-width" appearance="fill">
+                <mat-label>{{ control.label }}</mat-label>
+                <textarea rows="3" matInput [formControlName]="
+                'control-' +
+                control.inputType +
+                '-' +
+                control.idControl
+              "></textarea>
+            </mat-form-field>
+        </div>
+        <div *ngIf="control.controlType == 'select'">
+            <mat-form-field class="full-width" appearance="fill">
+                <mat-label>{{ control.label }}</mat-label>
+                <mat-select [formControlName]="
+                'control-' +
+                control.inputType +
+                '-' +
+                control.idControl
+              ">
+                    <mat-option *ngFor="let opcion of control.opciones" [value]="opcion.key">
+                        {{ opcion.value }}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>
+    </div>
+</div>

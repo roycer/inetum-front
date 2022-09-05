@@ -1,5 +1,5 @@
 <mat-toolbar>
-  <span>{{ modulo.label }}</span>
+  <span>{{ modulo.label }} - {{ submodulo.label }}</span>
   <div style="width: 100%;">
     <button type="button" (click)="backClicked()" mat-raised-button color="warn" style="float: right">
       <mat-icon>arrow_back</mat-icon>
@@ -95,18 +95,6 @@
     <div class="col-md-12">
       <mat-card>
         <div class="row">
-          <div class="col-md-12" *ngIf="controles.length > 0">
-            <button type="button" (click)="mostrarDialogAgregarSubModulo()" mat-raised-button color="primary"
-              style="float: left">
-              <mat-icon>note_add</mat-icon>
-              <span>Agregar Tab Detalle</span>
-            </button>
-            <button type="button" [routerLink]="['/panel/preview', modulo.key]" mat-raised-button color="warn"
-              style="float: right">
-              <mat-icon>search</mat-icon>
-              <span>Ver Formulario</span>
-            </button>
-          </div>
           <div class="col-md-12">
             <h2 style="text-align: center">Listado de Controles</h2>
           </div>
@@ -172,45 +160,6 @@
             </div>
             <div class="info-alert" *ngIf="controles.length == 0">
               <h3>No hay controles registrados.</h3>
-            </div>
-          </div>
-          <div class="col-md-12" style="margin-top: 25px" *ngIf="submodulos.length > 0">
-            <h2 style="text-align: center">Listado Tabs Detalle</h2>
-          </div>
-          <div class="col-md-12" style="margin-top: 15px">
-            <div *ngIf="submodulos.length > 0">
-              <table class="mat-table mat-elevation-z8">
-                <thead>
-                  <tr class="mat-header-row">
-                    <th class="mat-header-cell">Nombre del SubMódulo</th>
-                    <th class="mat-header-cell">Tabla Relacionada</th>
-                    <th class="mat-header-cell">Columna Relacionada</th>
-                    <th class="mat-header-cell">Config Formulario</th>
-                    <th class="mat-header-cell">Acciones</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr class="mat-row" *ngFor="let submodulo of submodulos">
-                    <td class="mat-cell">{{ submodulo.label }}</td>
-                    <td class="mat-cell">{{ submodulo.tableName }}</td>
-                    <td class="mat-cell">{{ submodulo.columnName }}</td>
-                    <td class="mat-cell">
-                      <button type="button" [routerLink]="['/panel/formtab', submodulo.key]" mat-stroked-button>
-                        <mat-icon>settings</mat-icon>
-                      </button>
-                    </td>
-                    <td class="mat-cell">
-                      <button type="button" (click)="mostrarDialogEditarSubModulo(submodulo)" mat-stroked-button>
-                        <mat-icon>edit</mat-icon>
-                      </button>
-                      <button type="button" (click)="eliminarSubModulo(submodulo)" mat-stroked-button
-                        style="margin-left: 10px">
-                        <mat-icon>delete</mat-icon>
-                      </button>
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
             </div>
           </div>
         </div>

@@ -23,6 +23,7 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { MatTabsModule } from '@angular/material/tabs';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { MatPaginatorImpl } from './mat-paginator';
 
@@ -55,6 +56,7 @@ import { MatPaginatorImpl } from './mat-paginator';
     MatRadioModule,
     MatTooltipModule,
     MatAutocompleteModule,
+    MatTabsModule,
     DragDropModule
   ],
   providers: [

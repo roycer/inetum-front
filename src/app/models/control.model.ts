@@ -1,5 +1,7 @@
 import { Modulo } from "./modulo.model";
+import { SubModulo } from "./submodulo.model";
 
+/* Los type son sólo de referencia para las Listas de Opciones Implementadas en Duro - Pendiente Moverlo a tablas */
 export type controlType = "input" | "textarea" | "select";
 
 export type inputType = "text" | "number" | "email" | "date" | "dni" | "option";
@@ -16,6 +18,7 @@ export class Control {
   constructor(
     public idControl: number | null,
     public modulo?: Modulo,
+    public submodulo?: SubModulo,
     public key?: string,
     public label?: string,
     public value?: string,

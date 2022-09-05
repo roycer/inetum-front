@@ -8,6 +8,8 @@ import { ModuloService } from 'src/app/services/modulo.service';
 import { Control } from 'src/app/models/control.model';
 import { ControlService } from 'src/app/services/control.service';
 import { OptionService } from 'src/app/services/option.service';
+import { SubModulo } from 'src/app/models/submodulo.model';
+import { SubModuloService } from 'src/app/services/submodulo.service';
 import { SelectData } from 'src/app/models/select-data.model';
 import { SelectService } from 'src/app/services/select.service';
 import { FormularioData } from 'src/app/models/formulario-data.model';
@@ -22,8 +24,10 @@ import * as moment from 'moment';
 export class PreviewComponent implements OnInit {
 
   public modulo: Modulo = new Modulo(null);
-  public controles: Control[] | null = [];
-  public keyModulo: string = '';
+  public controles: Control[] = [];
+  public controlesCabecera: Control[] = [];
+  public submodulos: SubModulo[] = [];
+  public keyModulo: string = '-';
   public form: FormGroup = new FormGroup({});
 
   constructor(
@@ -34,6 +38,7 @@ export class PreviewComponent implements OnInit {
     private moduloService: ModuloService,
     private controlService: ControlService,
     private opcionService: OptionService,
+    private subModuloService: SubModuloService,
     private selectService: SelectService,
     private formularioService: FormularioService
   ) { }
@@ -51,6 +56,7 @@ export class PreviewComponent implements OnInit {
       if (params['key'] != null) {
         this.keyModulo = params['key'];
         this.cargarModulo();
+        this.cargarSubModulosModulo();
         this.cargarControlesModulo();
       }
     });
@@ -68,10 +74,20 @@ export class PreviewComponent implements OnInit {
     );
   }
 
+  cargarSubModulosModulo() {
+    this.subModuloService.listarPorKeyModulo(this.keyModulo).subscribe(
+      response => {
+        this.submodulos = response;
+      }
+    );
+  }
+
   cargarControlesModulo() {
     this.controlService.listarPorKeyModulo(this.keyModulo).subscribe(
       response => {
         this.controles = response;
+        this.controlesCabecera = response.filter((val) => val.submodulo == undefined || val.submodulo == null);
+
         this.controles.map(control => {
           let idControl = (control.idControl) ? control.idControl : 0;
           this.opcionService.listarPorIdControl(idControl).subscribe(
@@ -139,6 +155,11 @@ export class PreviewComponent implements OnInit {
       }
     });
     return new FormGroup(group);
+  }
+
+  getControlesTab(controles: Control[], submodulo: SubModulo) {
+    let detalle = controles.filter((val) => val.submodulo?.key == submodulo.key);
+    return detalle;
   }
 
   guardarDatos(myForm: FormGroupDirective) {

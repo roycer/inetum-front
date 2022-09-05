@@ -7,7 +7,6 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatTable, MatTableDataSource } from '@angular/material/table';
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 import { Modulo } from 'src/app/models/modulo.model';
-import { ModuloService } from 'src/app/services/modulo.service';
 import { Control, option } from 'src/app/models/control.model';
 import { ControlService } from 'src/app/services/control.service';
 import { TablaColumnas } from 'src/app/models/tabla-columnas.model';
@@ -17,22 +16,21 @@ import { SubModuloService } from 'src/app/services/submodulo.service';
 import { DialogAlertComponent } from '../dialog/alert/dialog-alert.component';
 import { DialogControlComponent } from '../dialog/control/dialog-control.component';
 import { DialogOptionComponent } from '../dialog/option/dialog-option.component';
-import { DialogSubModuloComponent } from '../dialog/submodulo/dialog-submodulo.component';
 import * as moment from 'moment';
 
 @Component({
-  selector: 'app-form',
-  templateUrl: './form.component.html',
-  styleUrls: ['./form.component.css']
+  selector: 'app-formtab',
+  templateUrl: './formtab.component.html',
+  styleUrls: ['./formtab.component.css']
 })
-export class FormComponent implements OnInit {
+export class FormtabComponent implements OnInit {
 
   public formConfig: FormGroup = new FormGroup({});
   public modulo: Modulo = new Modulo(null);
   public submodulo: SubModulo = new SubModulo(null);
   public controles: Control[] = [];
-  public submodulos: SubModulo[] = [];
   public keyModulo: string = '-';
+  public keySubModulo: string = '-';
   public listaControles: option[] = [];
   public listaTipos: option[] = [];
   public listaTiposGrid: option[] = [];
@@ -49,7 +47,6 @@ export class FormComponent implements OnInit {
     private snackBar: MatSnackBar,
     private route: ActivatedRoute,
     private router: Router,
-    private moduloService: ModuloService,
     private controlService: ControlService,
     private tablaColumnasService: TablaColumnasService,
     private subModuloService: SubModuloService
@@ -81,12 +78,10 @@ export class FormComponent implements OnInit {
   configPagina() {
     this.route.params.subscribe((params: Params) => {
       if (params['key'] != null) {
-        this.keyModulo = params['key'];
-        this.cargarModulo();
-        this.cargarControlesModulo();
+        this.keySubModulo = params['key'];
+        this.cargarSubModulo();
         this.cargarListaControles();
         this.cargarListaTiposGrid();
-        this.cargarSubModulosModulo();
       }
     });
   }
@@ -102,11 +97,14 @@ export class FormComponent implements OnInit {
     });
   }
 
-  cargarModulo() {
-    this.moduloService.listarPorKey(this.keyModulo).subscribe(
+  cargarSubModulo() {
+    this.subModuloService.listarPorKey(this.keySubModulo).subscribe(
       response => {
-        this.modulo = response;
-        this.cargarListaColumnas(this.modulo.tableName as string);
+        this.submodulo = response;
+        this.cargarListaColumnas(this.submodulo.tableName as string);
+        this.modulo = (this.submodulo.modulo) ? this.submodulo.modulo : new Modulo(null);
+        this.keyModulo = (this.modulo.key) ? this.modulo.key : '-';
+        this.cargarControlesModulo();
       },
       error => {
         console.log(error);
@@ -116,13 +114,15 @@ export class FormComponent implements OnInit {
   }
 
   cargarControlesModulo() {
-    this.controlService.listarPorKeyModulo(this.keyModulo).subscribe(
-      response => {
-        let controlesCabecera = response.filter((val) => val.submodulo == undefined || val.submodulo == null);
-        this.controles = controlesCabecera;
-        this.dataSource = new MatTableDataSource(this.controles);
-      }
-    );
+    if (this.keyModulo != '-') {
+      this.controlService.listarPorKeyModulo(this.keyModulo).subscribe(
+        response => {
+          let controlesDetalle = response.filter((val) => val.submodulo?.key == this.keySubModulo);
+          this.controles = controlesDetalle;
+          this.dataSource = new MatTableDataSource(this.controles);
+        }
+      );
+    }
   }
 
   cargarListaColumnas(tableName: string) {
@@ -199,6 +199,7 @@ export class FormComponent implements OnInit {
 
     let control = new Control(null);
     control.modulo = this.modulo;
+    control.submodulo = this.submodulo;
     control.key = this.generateUUID();
     control.label = formulario.label;
     control.required = parseInt(formulario.required);
@@ -314,91 +315,5 @@ export class FormComponent implements OnInit {
         return (c === "x" ? r : (r & 0x3) | 0x8).toString(16);
       }
     );
-  }
-
-  cargarSubModulosModulo() {
-    this.subModuloService.listarPorKeyModulo(this.keyModulo).subscribe(
-      response => {
-        this.submodulos = response;
-      }
-    );
-  }
-
-  mostrarDialogAgregarSubModulo() {
-    const agregarDialog = this.dialog.open(DialogSubModuloComponent, {
-      disableClose: true,
-      data: {
-        titulo: "Agregar Tab Detalle",
-        modulo: this.modulo,
-        submodulo: this.submodulo,
-      },
-    });
-    agregarDialog.afterClosed().subscribe((result: SubModulo) => {
-      if (result) {
-        let nuevoSubModulo = result;
-        this.subModuloService.registrar(nuevoSubModulo).subscribe(response => {
-          if (response) {
-            this.cargarSubModulosModulo();
-            this.snackBar.open(
-              "SubMódulo registrado correctamente",
-              "AVISO",
-              { duration: 2000 }
-            );
-          }
-        });
-      }
-    });
-  }
-
-  mostrarDialogEditarSubModulo(submodulo: SubModulo) {
-    const editarDialog = this.dialog.open(DialogSubModuloComponent, {
-      disableClose: true,
-      data: {
-        titulo: "Editar Tab Detalle",
-        modulo: this.modulo,
-        submodulo: submodulo,
-      },
-    });
-    editarDialog.afterClosed().subscribe((result: SubModulo) => {
-      if (result) {
-        let editarSubModulo = result;
-        this.subModuloService.modificar(editarSubModulo).subscribe(response => {
-          if (response) {
-            this.cargarSubModulosModulo();
-            this.snackBar.open(
-              "SubMódulo editado correctamente",
-              "AVISO",
-              { duration: 2000 }
-            );
-          }
-        });
-      }
-    });
-  }
-
-  eliminarSubModulo(submodulo: SubModulo) {
-    const confirmDialog = this.dialog.open(DialogAlertComponent, {
-      disableClose: true,
-      data: {
-        titulo: "Alerta",
-        mensaje: "Deseas eliminar el registro seleccionado?",
-      },
-    });
-    confirmDialog.afterClosed().subscribe((result: any) => {
-      if (result === true) {
-        let eliminarSubModulo = submodulo;
-        let idSubModulo = (eliminarSubModulo.idSubModulo) ? eliminarSubModulo.idSubModulo : 0;
-        this.subModuloService.eliminar(idSubModulo).subscribe(response => {
-          if (response) {
-            this.cargarSubModulosModulo();
-            this.snackBar.open(
-              "SubMódulo eliminado correctamente",
-              "AVISO",
-              { duration: 2000 }
-            );
-          }
-        });
-      }
-    });
   }
 }

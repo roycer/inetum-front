@@ -4,6 +4,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { PagesComponent } from './pages.component';
 import { HomeComponent } from './home/home.component';
 import { FormComponent } from './form/form.component';
+import { FormtabComponent } from './formtab/formtab.component';
 import { PreviewComponent } from './preview/preview.component';
 import { DataComponent } from './data/data.component';
 
@@ -15,6 +16,7 @@ const routes: Routes = [
       { path: '', component: HomeComponent },
       { path: 'home', component: HomeComponent },
       { path: 'form/:key', component: FormComponent },
+      { path: 'formtab/:key', component: FormtabComponent },
       { path: 'preview/:key', component: PreviewComponent },
       { path: 'data/:key', component: DataComponent },
     ]

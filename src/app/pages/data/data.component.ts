@@ -19,7 +19,7 @@ export class DataComponent implements OnInit {
   public modulo: Modulo = new Modulo(null);
   public controles: Control[] | null = [];
   public controlesData: ControlData[] | null = [];
-  public keyModulo: string = '';
+  public keyModulo: string = '-';
   public keysData: any = [];
 
   constructor(

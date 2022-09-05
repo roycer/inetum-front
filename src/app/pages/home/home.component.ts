@@ -16,7 +16,7 @@ export class HomeComponent implements OnInit {
 
   public modulo: Modulo = new Modulo(null);
   public modulos: Modulo[] = [];
-  public displayedColumns: string[] = ['label', 'tableName', 'tabla', 'formulario', 'acciones'];
+  public displayedColumns: string[] = ['label', 'tableName', 'formulario', 'acciones'];
   public dataSource!: MatTableDataSource<Modulo>;
 
   constructor(
