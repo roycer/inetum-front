@@ -1,8 +1,12 @@
 version: "3.2"
 services:
-  front:
-    image: roycer/builder-front:0.1
-    container_name: front
+  my_front:
+    image: roycer/nginx:alpine
+    container_name: my_front
     restart: always
     ports:
       - 5532:80
+    volumes:
+      - ./dist/app-builder:/usr/share/nginx/html/
+volumes:
+  html: {}
