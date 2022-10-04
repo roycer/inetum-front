@@ -5,8 +5,4 @@ services:
     container_name: front
     restart: always
     ports:
-      - 5432:80
-    volumes:
-      - ./dist:/usr/share/nginx/html/
-volumes:
-  html: {}
+      - 5532:80
